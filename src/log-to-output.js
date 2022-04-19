@@ -1,5 +1,5 @@
-const CDP = import('chrome-remote-interface')
-const chalk = import('chalk')
+const CDP = require('chrome-remote-interface')
+const chalk = require('chalk')
 
 let eventFilter
 let recordLogs
