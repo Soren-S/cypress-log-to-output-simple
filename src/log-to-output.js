@@ -1,5 +1,5 @@
-const CDP = require('chrome-remote-interface')
-const chalk = require('chalk')
+const CDP = import('chrome-remote-interface')
+const chalk = import('chalk')
 
 let eventFilter
 let recordLogs
@@ -7,17 +7,17 @@ let recordLogs
 let messageLog = [];
 
 const severityColors = {
-  'verbose': (a) => a,
-  'info': chalk.blue,
-  'warning': chalk.yellow,
-  'error': chalk.red
+  verbose: (a) => a,
+  info: chalk.blue,
+  warning: chalk.yellow,
+  error: chalk.red
 }
 
 const severityIcons = {
-  'verbose': ' ',
-  'info': '🛈',
-  'warning': '⚠',
-  'error': '⚠',
+  verbose: ' ',
+  info: '🛈',
+  warning: '⚠',
+  error: '⚠',
 }
 
 function debugLog(msg) {
@@ -83,21 +83,9 @@ function logConsole(params) {
 
   const prefix = `[${new Date(timestamp).toISOString()}] ${icon} `
   const prefixSpacer = ' '.repeat(prefix.length)
-
-  let logMessage = `${prefix}${chalk.bold(`console.${type}`)} called`;
+  let logMessage = `${prefix}${args[0].value}`;
   log(color(logMessage));
   recordLogMessage(logMessage);
-
-  const logAdditional = (msg) => {
-    let logMessage = `${prefixSpacer}${msg}`;
-    log(color(logMessage));
-    recordLogMessage(logMessage);
-  };
-
-  if (args) {
-    logAdditional(`Arguments:`)
-    logAdditional('  ' + JSON.stringify(args, null, 2).split('\n').join(`\n${prefixSpacer}  `).trimRight())
-  }
 }
 
 function install(on, filter, options = {}) {
